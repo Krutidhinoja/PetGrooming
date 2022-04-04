@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navbar Starts -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">PetGrooming</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/required_details">Required Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/about">About</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light mx-2" type="submit">Search</button>
+                    {% if user is none %}
+                    <button type="button" class="btn btn-light mx-2" data-bs-toggle="modal"
+                        data-bs-target="#LoginModal">Login</button>
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal"
+                        data-bs-target="#SignupModal">Signup</button>
+                    {% else %}
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{user}}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
+                        </ul>
+                    </div>
+                    <!-- <a class="btn btn-outline-light mx=2" href="/userlogout">{{user}}</a> -->
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar Ends -->
+    
+    <!-- Updateprofile Form Starts -->
+    <div class="container my-4">
+    <form method="POST">
+        {% csrf_token %}
+    <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Firstname</label>
+            <input type="text" name="firstname" value="{{userid.firstname}}" class="form-control" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom02" class="form-label">Lastname</label>
+            <input type="text" name="lastname" value="{{userid.lastname}}" class="form-control" id="validationCustom02" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label">Username</label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <input type="text" name="email" value="{{userid.email}}" class="form-control" id="validationCustomUsername"
+                    aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Password</label>
+            <input type="password" name="password" value="{{userid.password}}" class="form-control" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom03" class="form-label">City</label>
+            <input type="text" name="city" value="{{userid.city}}" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+                Please provide a valid city.
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustom05" class="form-label">Zip</label>
+            <input type="text" name="zipcode" value="{{userid.zipcode}}" class="form-control" id="validationCustom05" required>
+            <div class="invalid-feedback">
+                Please provide a valid zip.
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary my-2" type="submit">Update
+                form</button>
+        </div>
+    </form>
+    </div>
+    <!-- Updateprofile Form Ends -->
+</body>
+</html>
