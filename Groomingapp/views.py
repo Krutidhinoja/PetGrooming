@@ -31,7 +31,7 @@ def home(request):
                 .create(
                      body="Hello user, \n Your account has been created successfully,\n Your OTP is{otp} ",
                      from_='+17579796403',
-                     to='+917016210249'
+                     to='7016210249'
                  )
                 print(message.sid)
                 return redirect('/')
