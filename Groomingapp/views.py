@@ -5,7 +5,9 @@ from django.contrib.auth import logout
 from Petgrooming import settings
 from django.core.mail import send_mail
 import random
-from twilio.rest import Client
+import requests
+import json
+
 
 # Create your views here.
 
@@ -25,15 +27,43 @@ def home(request):
                 send_mail(sub,msg,email_from,to_email)
 
                 #send Message
-                client = Client('AC590fb7717d374674344ebfe3f2ef50f8', '41071acef3e22e5b528b9ae8eeefa0a9')
+                # mention url
+                url = "https://www.fast2sms.com/dev/bulk"
 
-                message = client.messages \
-                .create(
-                     body="Hello user, \n Your account has been created successfully,\n Your OTP is{otp} ",
-                     from_='+17579796403',
-                     to='7016210249'
-                 )
-                print(message.sid)
+
+                # create a dictionary
+                my_data = {
+                    # Your default Sender ID
+                    'sender_id': 'FSTSMS',
+                    
+                    # Put your message here!
+                    'message': f'Your OTP is {otp}',
+                    
+                    'language': 'english',
+                    'route': 'p',
+                    
+                    # You can send sms to multiple numbers
+                    # separated by comma.
+                    'numbers': '9428230907,6356633872,7016210249'	
+                }
+
+                # create a dictionary
+                headers = {
+                    'authorization': 'q3wERzjd4vaOfAbUiXh5FpyrLmnKx0Poc8e9ksVIuDYJWtgBlT1ITujLVwJm0qYWaChOEnfoAgH8SxRF',
+                    'Content-Type': "application/x-www-form-urlencoded",
+                    'Cache-Control': "no-cache"
+                }
+
+                # make a post request
+                response = requests.request("POST",
+                                            url,
+                                            data = my_data,
+                                            headers = headers)
+                #load json data from source
+                returned_msg = json.loads(response.text)
+
+                # print the send message
+                print(returned_msg['message'])
                 return redirect('/')
             else:
                 print(signupfrm.errors)
