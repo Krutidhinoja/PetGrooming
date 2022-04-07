@@ -17,7 +17,7 @@ class Detaildb(models.Model):
     questions=models.CharField(max_length=100)
     visits=models.CharField(max_length=100)
     fileupload=models.FileField(upload_to="UploadedFiles")
-    description=models.TextField()
+    feedback=models.TextField()
 
 def __str__(self):
     return self.questions
